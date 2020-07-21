@@ -1,0 +1,9 @@
+com\mcc\MIIUniversitywebservice\services\FakultasRestService$1.class
+com\mcc\MIIUniversitywebservice\services\FakultasRestService.class
+com\mcc\MIIUniversitywebservice\entities\Fakultas.class
+com\mcc\MIIUniversitywebservice\services\JurusanRestService.class
+com\mcc\MIIUniversitywebservice\controllers\JurusanRestController.class
+com\mcc\MIIUniversitywebservice\services\JurusanRestService$1.class
+com\mcc\MIIUniversitywebservice\controllers\FakultasRestController.class
+com\mcc\MIIUniversitywebservice\MiiUniversityWebServiceApplication.class
+com\mcc\MIIUniversitywebservice\entities\Jurusan.class

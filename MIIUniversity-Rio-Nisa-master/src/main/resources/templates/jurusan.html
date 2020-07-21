@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Jurusan</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        <style>
+            .footer{
+                width: 100%;
+                height: 50px;
+                padding-left: 10px;
+                line-height: 50px;
+                background: #333;
+                color: #fff;
+                position: absolute;
+                bottom: 0px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">MII University</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav"  >
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Fakultas <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/siswa">Siswa</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/jurusan">Jurusan</a>
+                        </li> 
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container">
+            <div class="jumbotron">
+                <h2>Penerimaan Mahasiswa Baru Universitas MII</h2>
+                By LailakNisa & Febrio Sebayang
+            </div>
+        </div>
+
+        <div align="center" class="container" >
+
+            <br>
+        </div>     
+    <div align="center" class="container" >
+        <h1>DATA JURUSAN</h1>
+        <br>
+        <table class="table" id="dt" border="1" cellpadding="10" cellspacing="0" >
+
+            <div class="container" align="center">      
+                <thead>
+                    <tr>
+                        <th> ID</th>
+                        <th> Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead> 
+
+                <tbody>
+                    <tr th:each ="j : ${jurusans}">
+                        <td th:text ="${j.id}">id</td>
+                        <td th:text ="${j.nama}">nama</td>
+                        <!--button trigger modal satu-->
+                <div class="container" align="center">   
+                    <td><div class="btn-group" role="group" aria-label="Basic example">
+                            <button class="btn btn-secondary open-exampleModal1" href="#exampleModal1" data-toggle="modal tooltip" data-placement="top" title="Edit" th:data-id="${j.id}" th:data-name="${j.nama}" ><i class="fa fa-pencil"></i></button>
+                            <a th:href="@{'/jurusandelete/' + ${j.id}}" type="button"  class="btn btn-danger"  data-toggle="tooltip" data-placement="top" title="Delete" > <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+
+                        </div></tr></tbody>
+                        <br>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel1">Update Jurusan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="#" th:action ="@{/jurusansave}" th:object="${jurusan}" method="post">
+                                            <h3 class="text-primary" style="font-size:20px;">Jurusan Id</h3>
+                                            <p><input type="text" name="textId" id="textId" class ="form-control" th:field="*{id}" readonly></p><!--
+                                            -->                    
+                                            <h3 class="text-primary" style="font-size:20px;">Jurusan Name</h3>
+                                            <p><input type="text" name="textName" id="textName" class ="form-control" th:field="*{nama}"  required></p>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type ="submit" value="Save"  class="btn btn-primary" onclick="saveswal()" >Save changes</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--the end of modal body example modal satu-->
+
+                        <!-- Button trigger modal examplemodal-->
+                        <div class="container" align="left">
+                            <button class="btn btn-secondary open-exampleModal"  href="#exampleModal" data-toggle="modal tooltip" data-placement="top" title="Create new">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-plus-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M12 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z"/>
+                                </svg> 
+                            </button>
+
+                        </div>
+                        <br>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Create New Jurusan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="#" th:action ="@{/jurusansave}" th:object="${jurusan}" method="post">
+                                            <h3 class="text-primary" style="font-size:20px;">Jurusan Id</h3>
+                                            <p><input type="text"  id="textId" class ="form-control" th:field="*{id}" required></p><!--
+                                            -->                    
+                                            <h3 class="text-primary" style="font-size:20px;">Jurusan Name</h3>
+                                            <p><input type="text"  id="textName" class ="form-control" th:field="*{nama}"  required></p>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type ="submit" value="Save"  class="btn btn-primary" onclick="saveswal()" >Save changes</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--the end of modal body-->
+                        </table> 
+                        <script type="text/javascript">
+                            function clearSearch() {
+                            window.location = "[[@{/}]]";
+                            }
+                        </script>      
+
+                </div>
+             <footer align="center" style="background-color:  gainsboro; padding:15px" >Copyright@: Laila Khoirun Nisa</footer>
+   <script type="text/javascript">
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+                <script> $(document).ready( function () {
+                    $('#dt').DataTable();
+                    } );
+                </script>
+                <!--sweetalert-->
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+                <script>
+                    function swal1() {
+                    event.preventDefault(); // prevent form submit
+                    var form = event.target.form; // storing the form
+                    swal({
+                    title: "Are you sure?",
+                    text: "But you will still be able to retrieve this file.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, archive it!",
+                    cancelButtonText: "No, cancel please!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                    },
+                    function(isConfirm){
+                    if (isConfirm) {
+                    form.submit();          // submitting the form when user press yes
+                    } else {
+                    swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                    });
+                    }
+                </script>
+                 <script>
+                function saveswal(){
+                Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Your data has been saved',
+  showConfirmButton: false,
+  timer: 1500
+})}
+                </script>
+                <script>
+                    function swal(){
+                    const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                    })
+
+                    swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                    }).then((result) => {
+                    if (result.value) {
+                    swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                    } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                    swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                    )
+                    }
+                    })}
+                </script>
+                <script>
+                    $(".passingID").click(function(){
+                    var ids=$(this).attr('data-id');
+                    <!--var names=$(this).data('Name');-->
+                    $("#modal-body#textId").val(ids);
+                    $('#myModal').modal('show');
+                    <!--$("#modal-body#textName").val(names);});-->
+                    });
+                </script>
+                <script>
+                    $(document).on("click", ".open-AddBookDialog", function () {
+                    var myBookId = $(this).data('id');
+                    $(".modal-body #bookId").val( myBookId );
+                    $('#addBookDialog').modal('show');
+                    });
+                </script>
+                <script>
+                    $(document).on("click", ".open-exampleModal1", function () {
+                    var ids = $(this).data('id');
+                    var names = $(this).data('name');
+                    $(".modal-body #textId").val( ids );
+                    $(".modal-body #textName").val( names );
+                    $('#exampleModal1').modal('show');
+                    });
+                </script>
+                <script>
+                    $(document).on("click", ".open-exampleModal", function () {
+                    var ids = null;
+                    var namas = null;
+                    var jurusans = $(this).data('jurusan'); 
+                    $(".modal-body #textId").val( ids );
+                    $(".modal-body #textName").val( namas );
+                    $('#exampleModal').modal('show');
+                    });
+                </script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+                <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"> 
+            </div>        
+            </body>
+            </html>
