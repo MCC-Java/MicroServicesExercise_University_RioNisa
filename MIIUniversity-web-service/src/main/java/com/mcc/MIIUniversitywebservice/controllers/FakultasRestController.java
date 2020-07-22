@@ -31,7 +31,7 @@ public String index( Model model){
    model.addAttribute("fakultas", new Fakultas());
     model.addAttribute("fakultass", fakultasRestService.getAll());
    
-    return "index";
+    return "tables";
 }
 @PostMapping("/save")
 public String save(@Validated Fakultas fakultas){

@@ -31,7 +31,7 @@ public String index( Model model){
    model.addAttribute("siswa", new Siswa());
     model.addAttribute("siswas", siswaRestService.getAll());
    
-    return "siswa";
+    return "tablesSiswa";
 }
 @PostMapping("/siswasave")
 public String save(@Validated Siswa siswa){
