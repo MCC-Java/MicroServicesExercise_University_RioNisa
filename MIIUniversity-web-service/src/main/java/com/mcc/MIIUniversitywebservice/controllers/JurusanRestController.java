@@ -31,7 +31,7 @@ public String index( Model model){
    model.addAttribute("jurusan", new Jurusan());
     model.addAttribute("jurusans", jurusanRestService.getAll());
    
-    return "jurusan";
+    return "tablesJurusan";
 }
 @PostMapping("/jurusansave")
 public String save(@Validated Jurusan jurusan){
